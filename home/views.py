@@ -24,4 +24,18 @@ class CategoryView(Base):
 
 		return render(request,'category.html',self.context)
 
+class DetailView(Base):
+	def get(self,request,slug):
+		self.context['product_detail'] = Product.objects.filter(slug = slug)
+		self.context['categories'] = Category.objects.all()
+		self.context['brands'] = Brand.objects.all()
+		all_brand = []
+		for i in Brand.objects.all():
+			ids = Brand.objects.get(name = i).id
+			count = Product.objects.filter(brand = ids).count()
+			all_brand.append({'product_count':count,'ids':ids})
+			self.context['counts'] = all_brand
+
+		return render(request,'product-detail.html',self.context)
+
 

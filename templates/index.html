@@ -23,7 +23,7 @@
                         <div class="header-slider normal-slider">
                             {% for slider in sliders %}
                             <div class="header-slider-item">
-                                <img src="{{slider.image.url}}" alt="Slider Image" />
+                                <img src="{{slider.image.url}}" width = "600" height = "400" alt="Slider Image" />
                                 <div class="header-slider-caption">
                                     <p>{{slider.description}}</p>
                                     <a class="btn" href="{{slider.image.url}}"><i class="fa fa-shopping-cart"></i>Shop Now</a>
@@ -226,7 +226,7 @@
                     <div class="col-lg-3">
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="#">{{hot.name}}</a>
+                                <a href="/detail/{{hot.slug}}">{{hot.name}}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -290,7 +290,7 @@
                     <div class="col-lg-3">
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="#">{{new.name}}</a>
+                                <a href="/detail/{{new.slug}}">{{new.name}}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
