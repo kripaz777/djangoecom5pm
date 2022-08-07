@@ -39,3 +39,11 @@ class DetailView(Base):
 		return render(request,'product-detail.html',self.context)
 
 
+class SearchView(Base):
+	def get(self,request):
+		query = request.GET.get('query')
+		print(query)
+		if not query:
+			return redirect('/')
+		self.context['search_product'] = Product.objects.filter(name__icontains = query)
+		return render(request,'search.html',self.context)
