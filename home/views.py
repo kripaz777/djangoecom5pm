@@ -47,3 +47,41 @@ class SearchView(Base):
 			return redirect('/')
 		self.context['search_product'] = Product.objects.filter(name__icontains = query)
 		return render(request,'search.html',self.context)
+
+from django.contrib.auth.models import User
+from django.contrib import messages
+def signup(request):
+	if request.method == 'POST':
+		f_name = request.POST['first_name']
+		l_name = request.POST['last_name']
+		username = request.POST['username']
+		email = request.POST['email']
+		password = request.POST['password']
+		cpassword = request.POST['cpassword']
+
+		if cpassword == password:
+			if User.objects.filter(username = username).exists():
+				messages.error(request,'The username is already taken')
+				return redirect('/signup')
+			elif User.objects.filter(email = email).exists():
+				messages.error(request,'The email is already taken')
+				return redirect('/signup')
+
+			else:
+				user = User.objects.create_user(
+					username = username,
+					email = email,
+					first_name = f_name,
+					last_name = l_name,
+					password = password
+					)
+				user.save()
+				return redirect('/signup')
+		else:
+			messages.error(request,'Password doest not match!')
+			return redirect('/signup')
+
+	return render(request,'signup.html')
+
+
+
