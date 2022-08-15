@@ -83,6 +83,11 @@ def signup(request):
 
 	return render(request,'signup.html')
 
+class CartView(Base):
+	def get(self,request):
+		username = request.user.username
+		self.context['cart_product'] = Cart.objects.filter(username = username,checkout = False)
+		return render(request,'cart.html',self.context)
 def add_to_cart(request,slug):
 	username = request.user.username
 	if Product.objects.filter(slug = slug).exists():
@@ -98,7 +103,6 @@ def add_to_cart(request,slug):
 			total = original_price*quantity
 			Cart.objects.filter(slug=slug, username=username, checkout=False).update(quantity = quantity,total = total)
 			return redirect('/')
-
 		else:
 			price = Product.objects.get(slug=slug).price
 			discounted_price = Product.objects.get(slug=slug).discounted_price
@@ -111,8 +115,7 @@ def add_to_cart(request,slug):
 				username = username,
 				slug = slug,
 				items = Product.objects.all()[0],
-				total = original_price
-			)
+				total = original_price)
 			carts.save()
 			return redirect('/')
 
