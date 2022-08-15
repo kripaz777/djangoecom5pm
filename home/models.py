@@ -74,6 +74,6 @@ class Cart(models.Model):
 	items = models.ForeignKey(Product,on_delete = models.CASCADE)
 	checkout = models.BooleanField(default = False)
 	quantity = models.IntegerField(default = 1)
-
+	total = models.IntegerField(default = 1)
 	def __str__(self):
-		return self.name
+		return self.username
