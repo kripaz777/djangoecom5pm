@@ -114,7 +114,7 @@ def add_to_cart(request,slug):
 			carts = Cart.objects.create(
 				username = username,
 				slug = slug,
-				items = Product.objects.all()[0],
+				items = Product.objects.filter(slug = slug)[0],
 				total = original_price)
 			carts.save()
 			return redirect('/')
