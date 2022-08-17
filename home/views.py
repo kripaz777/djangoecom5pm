@@ -102,7 +102,7 @@ def add_to_cart(request,slug):
 			quantity +=1
 			total = original_price*quantity
 			Cart.objects.filter(slug=slug, username=username, checkout=False).update(quantity = quantity,total = total)
-			return redirect('/')
+			return redirect('/cart')
 		else:
 			price = Product.objects.get(slug=slug).price
 			discounted_price = Product.objects.get(slug=slug).discounted_price
@@ -117,7 +117,7 @@ def add_to_cart(request,slug):
 				items = Product.objects.filter(slug = slug)[0],
 				total = original_price)
 			carts.save()
-			return redirect('/')
+			return redirect('/cart')
 
 
 def reduce_cart(request,slug):
@@ -135,7 +135,7 @@ def reduce_cart(request,slug):
 				quantity -=1
 				total = original_price*quantity
 				Cart.objects.filter(slug=slug, username=username, checkout=False).update(quantity = quantity,total = total)
-			return redirect('/cart')
+				return redirect('/cart')
 
 	return redirect('/cart')
 
