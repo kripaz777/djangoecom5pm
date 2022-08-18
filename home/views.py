@@ -29,6 +29,8 @@ class DetailView(Base):
 		self.context['product_detail'] = Product.objects.filter(slug = slug)
 		self.context['categories'] = Category.objects.all()
 		self.context['brands'] = Brand.objects.all()
+		self.context['reviews'] = ProductReview.objects.filter(slug=slug)
+
 		all_brand = []
 		for i in Brand.objects.all():
 			ids = Brand.objects.get(name = i).id
@@ -94,6 +96,7 @@ class CartView(Base):
 			total_price = total_price+p
 			c = c+1
 		print(total_price)
+
 		self.context['total_price'] = total_price
 		self.context['shipping_price'] = 20
 		self.context['all_price'] = total_price+20
@@ -155,3 +158,18 @@ def delete_cart(request,slug):
 		Cart.objects.filter(slug=slug, username=username, checkout=False).delete()
 		return redirect('/cart')
 
+
+def review(request,slug):
+	username = request.user.username
+	email = request.user.email
+	if request.method == 'POST':
+		star = request.POST['star']
+		review = request.POST['review']
+		data = ProductReview.objects.create(
+			username = username,
+			email = email,
+			star = star,
+			review = review
+		)
+		data.save()
+		return redirect(f'/detail/{{slug}}')

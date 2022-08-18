@@ -119,19 +119,24 @@
                                         </ul>
                                     </div>
                                     <div id="reviews" class="container tab-pane fade">
+                                        {% for rev in reviews %}
                                         <div class="reviews-submitted">
-                                            <div class="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
+                                            <div class="reviewer">{{rev.username}} - <span>01 Jan 2020</span></div>
                                             <div class="ratting">
+                                                {% if rev.star %}
+                                                {% for i in 1|ljust:{{rev.star}} %}
                                                 <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                                {% endfor %}
+                                                {% endif%}
                                             </div>
                                             <p>
-                                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                                                {{rev.review}}
                                             </p>
                                         </div>
+                                        {% endfor %}
+
+                                        {% if user.is_authenticated %}
+                                        <form method = "POST" action = "/review/{{detail.slug}}">
                                         <div class="reviews-submit">
                                             <h4>Give your Review:</h4>
                                             <div class="ratting">
@@ -142,20 +147,16 @@
                                                 <i class="far fa-star"></i>
                                             </div>
                                             <div class="row form">
-                                                <div class="col-sm-6">
-                                                    <input type="text" placeholder="Name">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <input type="email" placeholder="Email">
+                                                <div class="col-sm-12">
+                                                    <textarea name = "review" placeholder="Review"></textarea>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <textarea placeholder="Review"></textarea>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <button>Submit</button>
+                                                    <button type = "submit">Submit</button>
                                                 </div>
                                             </div>
                                         </div>
+                                        </form>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
