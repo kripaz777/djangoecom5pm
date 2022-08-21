@@ -169,7 +169,8 @@ def review(request,slug):
 			username = username,
 			email = email,
 			star = star,
+			slug = slug,
 			review = review
 		)
 		data.save()
-		return redirect(f'/detail/{{slug}}')
+		return redirect(f'/detail/{slug}')
