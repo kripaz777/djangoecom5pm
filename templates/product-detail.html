@@ -124,7 +124,7 @@
                                             <div class="reviewer">{{rev.username}} - <span>01 Jan 2020</span></div>
                                             <div class="ratting">
                                                 {% if rev.star %}
-                                                {% for i in 1|ljust:{{rev.star}} %}
+                                                {% for i in 1|ljust:rev.star %}
                                                 <i class="fa fa-star"></i>
                                                 {% endfor %}
                                                 {% endif%}
@@ -137,15 +137,19 @@
 
                                         {% if user.is_authenticated %}
                                         <form method = "POST" action = "/review/{{detail.slug}}">
+                                            {% csrf_token %}
                                         <div class="reviews-submit">
                                             <h4>Give your Review:</h4>
-                                            <div class="ratting">
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
+                                            <label for="stars">Review:</label>
+                                              <select name="star" id="stars">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                  <option value="5">5</option>
+                                              </select>
+                                              <br><br>
+
                                             <div class="row form">
                                                 <div class="col-sm-12">
                                                     <textarea name = "review" placeholder="Review"></textarea>
@@ -463,3 +467,5 @@
         <!-- Brand End -->
         
         {% endblock %}
+
+
