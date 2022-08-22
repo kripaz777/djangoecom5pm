@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.views.generic import View
 from .models import *
+
+
 # Create your views here.
 class Base(View):
 	context = {}
@@ -174,3 +176,14 @@ def review(request,slug):
 		)
 		data.save()
 		return redirect(f'/detail/{slug}')
+
+
+#---------------------------------------------------------------API------------------------------------------------
+from django.urls import path, include
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
+from .serializers import *
+# ViewSets define the view behavior.
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

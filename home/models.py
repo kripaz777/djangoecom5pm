@@ -1,5 +1,5 @@
 from django.db import models
-
+from ckeditor.fields import RichTextField
 # Create your models here.
 class Category(models.Model):
 	name = models.CharField(max_length = 300)
@@ -47,8 +47,8 @@ class Product(models.Model):
 	price = models.IntegerField()
 	discounted_price = models.IntegerField()
 	image = models.ImageField(upload_to = 'media')
-	description = models.TextField(blank = True)
-	specification = models.TextField(blank = True)
+	description = RichTextField(blank = True)
+	specification = RichTextField(blank = True)
 	category = models.ForeignKey(Category,on_delete = models.CASCADE)
 	subcategory = models.ForeignKey(SubCategory,on_delete = models.CASCADE)
 	brand = models.ForeignKey(Brand,on_delete = models.CASCADE)
