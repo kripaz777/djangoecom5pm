@@ -180,10 +180,23 @@ def review(request,slug):
 
 #---------------------------------------------------------------API------------------------------------------------
 from django.urls import path, include
-from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from .serializers import *
 # ViewSets define the view behavior.
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+from rest_framework import generics
+import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+
+
+class ProductFilterView(generics.ListAPIView):
+	queryset = Product.objects.all()
+	serializer_class = ProductSerializer
+	filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+	filterset_fields = ['category','subcategory','brand','stock','labels']
+	search_fields = ['name','id','description','specification']
+	ordering_fields = ['price','id','discounted_price']

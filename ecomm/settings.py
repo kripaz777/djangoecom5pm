@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'ckeditor',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
